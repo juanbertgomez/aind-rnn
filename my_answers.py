@@ -29,7 +29,7 @@ def window_transform_series(series, window_size):
 def build_part1_RNN(window_size):
 
     model = Sequential()
-    model.add(LSTM( 5, input_shape=(window_size,1)))
+    model.add(LSTM(5, input_shape=(window_size,1)))
     model.add(Dense(1))
 
     # build model using keras documentation recommended optimizer initialization
