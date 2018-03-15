@@ -53,12 +53,22 @@ def window_transform_text(text, window_size, step_size):
     # containers for input/output pairs
     inputs = []
     outputs = []
-    for i in range(len(text)):
+    for i in range(0, len(text) - window_size, step_size):
         inputs.append(text[i: i + window_size])
-        outputs.append(text[i + window_size : i + window_size + step_size])
+        outputs.append(text[i + window_size])
     return inputs,outputs
 
 # TODO build the required RNN model:
 # a single LSTM hidden layer with softmax activation, categorical_crossentropy loss
 def build_part2_RNN(window_size, num_chars):
-    pass
+    model = Sequential([
+        LSTM(200, input_shape=(window_size, num_chars)),
+        Dense(num_chars),
+        Activation('softmax'),        
+    ])
+    
+    optimizer = keras.optimizers.RMSprop(lr=0.001, rho=0.9, epsilon=1e-08, decay=0.0)
+    
+    model.compile(loss='categorical_crossentropy', optimizer=optimizer)
+    
+    return model
